@@ -1,16 +1,33 @@
+import 'package:flashcard_quize_app/cubits/cubit/add_cards_cubit.dart';
 import 'package:flashcard_quize_app/views/widgets/custom_button.dart';
 import 'package:flashcard_quize_app/views/widgets/cutom_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class AddCardBottomSheet extends StatelessWidget {
   const AddCardBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
-        child: AddCardForm(),
+        child: BlocConsumer<AddCardsCubit, AddCardsState>(
+          listener: (context, state) {
+            if (state is AddCardSuccess) {
+              Navigator.pop(context);
+            }
+            if (state is AddCardFailure) {
+              print("failed ${state.errMessage}");
+            }
+          },
+          builder: (context, state) {
+            return ModalProgressHUD(
+                inAsyncCall: state is AddCardLoading ? true : false,
+                child: const AddCardForm());
+          },
+        ),
       ),
     );
   }
