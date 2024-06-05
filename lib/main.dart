@@ -1,12 +1,14 @@
 import 'package:flashcard_quize_app/constants.dart';
 import 'package:flashcard_quize_app/cubits/cubit/add_cards_cubit.dart';
 import 'package:flashcard_quize_app/models/note_model.dart';
+import 'package:flashcard_quize_app/simple_bloc_observer.dart';
 import 'package:flashcard_quize_app/views/cards_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
+  Bloc.observer = SimpleBlocObserver();
   await Hive.initFlutter();
   await Hive.openBox(kCardsBox);
   Hive.registerAdapter(CardModelAdapter());
