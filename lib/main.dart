@@ -8,10 +8,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
-  Bloc.observer = SimpleBlocObserver();
   await Hive.initFlutter();
-  await Hive.openBox(kCardsBox);
+  Bloc.observer = SimpleBlocObserver();
+
   Hive.registerAdapter(CardModelAdapter());
+  await Hive.openBox<CardModel>(kCardsBox);
+
   runApp(const FlashCardsQuizApp());
 }
 

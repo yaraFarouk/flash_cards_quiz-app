@@ -15,7 +15,7 @@ class AddCardsCubit extends Cubit<AddCardsState> {
       emit(AddCardSuccess());
       await cardBox.add(card);
     } catch (e) {
-      AddCardFailure(errMessage: e.toString());
+      emit(AddCardFailure(errMessage: e.toString()));
     }
   }
 }
